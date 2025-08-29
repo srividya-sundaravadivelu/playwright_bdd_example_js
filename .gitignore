@@ -1,0 +1,27 @@
+.DS_Store
+.vscode
+.idea
+
+# npm
+node_modules
+npm-debug.log
+
+# yarn
+.pnp.*
+.yarn
+
+# env
+.env
+
+# tests
+test-results
+playwright-report
+cucumber-report
+**/.features-gen/**/*.spec.js
+
+.nx
+
+build-archive.log
+/browserstack.yml
+/log
+/allure-results
