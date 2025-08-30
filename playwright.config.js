@@ -4,7 +4,7 @@ import 'dotenv/config';  // Automatically loads variables from .env
 
 defineBddConfig({
   features: 'features/**/*.feature',
-  steps: 'steps/**/*.js',
+  steps: ['steps/**/*.js','fixtures/fixtures.js']
 });
 
 export default defineConfig({

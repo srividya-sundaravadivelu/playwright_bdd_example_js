@@ -1,5 +1,5 @@
 // @ts-check
-export class HomePage {
+export class homePage {
     /**
      * @param {import("playwright-core").Page} page
      */
