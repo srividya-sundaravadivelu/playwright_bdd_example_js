@@ -1,7 +1,13 @@
 import { test as setup, expect } from '@playwright/test';
 import path from 'path';
+import fs from 'fs';
 
-const authFile = path.join(__dirname, '../playwright/.auth/user.json');
+const authDir = path.join(__dirname, '../playwright/.auth');
+if (!fs.existsSync(authDir)) {
+  fs.mkdirSync(authDir, { recursive: true });
+}
+
+const authFile = path.join(authDir, 'user.json');
 
 setup('authenticate', async ({ page }) => {
   // Perform authentication steps. Replace these actions with your own.
