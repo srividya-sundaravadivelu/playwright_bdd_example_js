@@ -31,19 +31,19 @@ export class homePage {
     async getActionButtonsText() {
         return await this.actionButtons.allInnerTexts();
     }
-   
+
     async clickElement(elementName) {
         switch (elementName) {
             case 'Pricing':
                 await this.page.getByText('Pricing', { exact: true }).click();
                 break;
             case 'Home':
-            case 'Try Now':                     
+            case 'Try Now':
                 await this.page.getByRole('link', { name: elementName }).click();
-                break; 
-            case 'Sign In':            
-            case 'Try for free':             
-            case 'For Medical Professionals':                            
+                break;
+            case 'Sign In':
+            case 'Try for free':
+            case 'For Medical Professionals':
             case 'Start Medical Triage Assessment':
             case 'View Pricing Plans':
                 await this.page.getByRole('button', { name: elementName }).click();
@@ -55,8 +55,13 @@ export class homePage {
         return this.page.url();
     }
 
-    async isSignInPopupVisible(){
+    async isSignInPopupVisible() {
         return await this.signInPopup.isVisible();
+    }
+
+    async getNormalizedUrl() {
+        const currentUrl = this.page.url();
+        return currentUrl.replace(/#$/, '');  // remove trailing #
     }
 }
 

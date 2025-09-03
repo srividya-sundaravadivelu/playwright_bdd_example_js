@@ -27,11 +27,9 @@ Feature: Manan Home page
     When The user clicks "Home"
     Then The user should be redirected to the Home page
 
-
   Scenario: Verify "Pricing" link
     When The user clicks "Pricing"
     Then The user should be redirected to the Subscription page
-
 
   Scenario: Verify "View Pricing Plans" button
     When The user clicks "View Pricing Plans"
@@ -42,9 +40,16 @@ Feature: Manan Home page
     Then The user should see a pop-up window prompting sign-in with a Google account
 
     Examples:
+      | element                   |
+      | Sign In                   |
+      | For Medical Professionals |
+
+  Scenario: Verify clicking "<element>" opens Manan application page
+    When The user clicks "<element>"
+    Then The user should be redirected to the Manan application page
+
+    Examples:
       | element                         |
-      | Sign In                         |
       | Try for free                    |
-      | For Medical Professionals       |
       | Try Now                         |
       | Start Medical Triage Assessment |

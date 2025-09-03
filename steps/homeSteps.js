@@ -2,7 +2,7 @@
 import { expect } from '@playwright/test';
 import { Given, When, Then } from '../fixtures/fixtures';
 
-Given('The user is on the Home page', async ({ homePage }) => {    
+Given('The user is on the Home page', async ({ homePage }) => {
     await homePage.goto();
 });
 
@@ -30,7 +30,8 @@ Then('The user should see buttons:', async ({ homePage }, dataTable) => {
 });
 
 Then('The user should be redirected to the Home page', async ({ homePage }) => {
-    expect(homePage.page).toHaveURL(process.env.APP_URL + '#');
+    const normalizedUrl = await homePage.getNormalizedUrl();
+    expect(normalizedUrl).toBe(process.env.APP_URL);
 });
 
 Then('The user should see a pop-up window prompting sign-in with a Google account', async ({ homePage }) => {
@@ -44,6 +45,11 @@ Then('The user should be redirected to the Subscription page', async ({ homePage
 
 When('The user clicks {string}', async ({ homePage }, elementName) => {
     await homePage.clickElement(elementName);
+});
+
+Then('The user should be redirected to the Manan application page', async ({ homePage }) => {
+    const normalizedUrl = await homePage.getNormalizedUrl();
+    expect(normalizedUrl).toBe(process.env.APP_URL + 'app');
 });
 
 
