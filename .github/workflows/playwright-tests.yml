@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_URL: ${{ secrets.APP_URL }}
+      USER_NAME: ${{ secrets.USER_NAME }}
+      USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
