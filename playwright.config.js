@@ -8,6 +8,9 @@ defineBddConfig({
 });
 
 export default defineConfig({
+  fullyParallel: true,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 4 : 1,
   projects: [
     // Setup project
     { name: 'setup', testDir: './auth', testMatch: /.*\.setup\.js/ },
