@@ -23,8 +23,10 @@ jobs:
       run: npx playwright install --with-deps
     - name: Generate bdd test files
       run: npx bddgen
-    - name: Run Playwright tests
-      run: npx playwright test
+    - name: Run setup first
+      run: npx playwright test --project=setup
+    - name: Run dependent tests
+      run: npx playwright test --project=chromium    
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
