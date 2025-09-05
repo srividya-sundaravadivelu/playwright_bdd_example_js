@@ -38,6 +38,9 @@ export default defineConfig({
   testDir: './.features-gen',
   use: {
     baseURL: process.env.APP_URL,
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'on-first-retry'
   },
   reporter: 'html',
 });

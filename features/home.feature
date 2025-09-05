@@ -44,7 +44,7 @@ Feature: Manan Home page
       | Sign In                   |
       | For Medical Professionals |
 
-  Scenario: Verify clicking "<element>" opens Manan application page
+  Scenario Outline: Verify clicking "<element>" opens Manan application page
     When The user clicks "<element>"
     Then The user should be redirected to the Manan application page
 
