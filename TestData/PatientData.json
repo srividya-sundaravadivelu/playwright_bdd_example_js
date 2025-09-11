@@ -9,20 +9,28 @@
       "BloodReport": "SampleReports/Diabetic and Hemogram Test_Thyrocare lab.pdf.pdf"
     },
     {
+      "Scenario": "Complete Form - Manual",
+      "Age": "52",
+      "Gender": "Male",
+      "ChiefComplaint": "Patient complains of fatigue for the past 2 months.",
+      "DetailedSymptoms": "Persistent tiredness or exhaustion even after rest or sleep. Lack of energy for daily activities. Mental fatigue: difficulty concentrating, poor memory, feeling “foggy”. Physical fatigue: weakness, heaviness in limbs, slower movements",
+      "VitalSignsAndLabValues": "BP: 120/80 mmHg, HR: 78 bpm, RR: 16/min, Temp: 98.6°F, SpO2: 97%, HbA1c: 6.5%, ABG: 131 mg/dl"
+    },
+    {
       "Scenario": "Missing Fields",
       "Age": "",
       "Gender": "Male",
       "ChiefComplaint": "",
       "DetailedSymptoms": "",
-      "BloodReport": "SampleReports/Diabetic and Hemogram Test_Thyrocare lab.pdf.pdf"
-    },    
+      "BloodReport": ""
+    },
     {
       "Scenario": "Invalid Blood Report File",
       "Age": "52",
       "Gender": "Male",
       "ChiefComplaint": "Patient complains of fatigue for the past 2 months.",
       "DetailedSymptoms": "Persistent tiredness or exhaustion even after rest or sleep. Lack of energy for daily activities.",
-      "BloodReport": "SampleReports/invalid-file.txt"
+      "BloodReport": "SampleReports/HyperThyroid_Report_final.docx"
     }
   ]
 }

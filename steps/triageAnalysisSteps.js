@@ -1,4 +1,3 @@
-import { expect } from '@playwright/test';
 import { Given, When, Then } from '../fixtures/fixtures';
 
 Given('The user is on the patient triage analysis page', async ({ homePage }) => {
@@ -12,17 +11,31 @@ When('The user fills form for {string}', async ({ triageAnalysisPage }, scenario
 });
 
 Then('The user should see the expected result for {string}', async ({ triageAnalysisPage }, scenarioName) => {
-    // Step: Then The user should see the expected result for "Complete Form"
-    // From: features\triage-analysis.feature:8:5
     switch (scenarioName) {
         case 'Complete Form':
-            await triageAnalysisPage.verifyTriageAssessmentFieldVisibility();
+        case 'Complete Form - Manual':
+            await triageAnalysisPage.expectAnalysisComplete();
             break;
         case 'Missing Fields':
-            await triageAnalysisPage.verifyMissingFieldsValidation();
+            await triageAnalysisPage.expectMissingFieldsError();
             break;
-
-
     }
-
 });
+
+
+When('the user uploads blood report {string}', async ({ triageAnalysisPage }, fileName) => {
+    await triageAnalysisPage.uploadBloodReport(fileName);
+});
+
+Then('the user should see the {string} notification', async ({ triageAnalysisPage }, outcome) => {
+    switch (outcome) {
+        case 'success':
+            await triageAnalysisPage.expectUploadSuccess();
+            break;
+        case 'error':
+            await triageAnalysisPage.expectUploadError();
+            break;
+    }
+});
+
+
