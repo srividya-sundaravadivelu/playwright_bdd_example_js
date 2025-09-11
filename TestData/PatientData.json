@@ -1,0 +1,28 @@
+{
+  "Patients": [
+    {
+      "Scenario": "Complete Form",
+      "Age": "52",
+      "Gender": "Male",
+      "ChiefComplaint": "Patient complains of fatigue for the past 2 months.",
+      "DetailedSymptoms": "Persistent tiredness or exhaustion even after rest or sleep. Lack of energy for daily activities. Mental fatigue: difficulty concentrating, poor memory, feeling “foggy”. Physical fatigue: weakness, heaviness in limbs, slower movements",
+      "BloodReport": "SampleReports/Diabetic and Hemogram Test_Thyrocare lab.pdf.pdf"
+    },
+    {
+      "Scenario": "Missing Fields",
+      "Age": "",
+      "Gender": "Male",
+      "ChiefComplaint": "",
+      "DetailedSymptoms": "",
+      "BloodReport": "SampleReports/Diabetic and Hemogram Test_Thyrocare lab.pdf.pdf"
+    },    
+    {
+      "Scenario": "Invalid Blood Report File",
+      "Age": "52",
+      "Gender": "Male",
+      "ChiefComplaint": "Patient complains of fatigue for the past 2 months.",
+      "DetailedSymptoms": "Persistent tiredness or exhaustion even after rest or sleep. Lack of energy for daily activities.",
+      "BloodReport": "SampleReports/invalid-file.txt"
+    }
+  ]
+}

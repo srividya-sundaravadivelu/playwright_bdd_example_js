@@ -1,3 +1,5 @@
+import { triageAnalysisPage } from "./triageAnalysisPage";
+
 // @ts-check
 export class homePage {
     /**
@@ -62,6 +64,12 @@ export class homePage {
     async getNormalizedUrl() {
         const currentUrl = this.page.url();
         return currentUrl.replace(/#$/, '');  // remove trailing #
+    }
+
+    async startTriageAssessment() {
+        await this.clickElement('Start Medical Triage Assessment');
+        await this.page.waitForURL(process.env.APP_URL + 'app');
+        return new triageAnalysisPage(this.page); // return next page object
     }
 }
 
