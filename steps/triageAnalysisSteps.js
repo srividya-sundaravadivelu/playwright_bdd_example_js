@@ -1,8 +1,6 @@
 import { Given, When, Then } from '../fixtures/fixtures';
 
-Given('The user is on the patient triage analysis page', async ({ homePage }) => {
-    homePage.goto();
-    const triageAnalysisPage = await homePage.startTriageAssessment();
+Given('The user is on the patient triage analysis page', async ({ triageAnalysisPage }) => {
     await triageAnalysisPage.verifyLoaded();
 });
 

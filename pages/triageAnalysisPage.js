@@ -38,7 +38,6 @@ export class triageAnalysisPage {
 
         // Assert that the page URL is exactly as expected
         await expect(this.page).toHaveURL(process.env.APP_URL + 'app');
-
     }
 
     async fillForm(scenarioName) {
@@ -87,7 +86,8 @@ export class triageAnalysisPage {
 
     // --- Assertions ---
     async expectUploadSuccess() {
-        await expect(this.uploadSuccessNotification).toBeVisible({ timeout: 120_000 });
+        await this.uploadSuccessNotification.waitFor({ state: 'visible', timeout: 120_000 });
+        await expect(this.uploadSuccessNotification).toBeVisible();
         await expect(this.vitalSignsField).toHaveValue(/.+/, { timeout: 90_000 });
     }
 

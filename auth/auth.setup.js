@@ -1,4 +1,4 @@
-import { test as setup, expect } from '@playwright/test';
+import { test as setup } from '@playwright/test';
 import path from 'path';
 import fs from 'fs';
 
@@ -12,6 +12,7 @@ const authFile = path.join(authDir, 'user.json');
 setup('authenticate', async ({ page }) => {
   // Perform authentication steps. Replace these actions with your own.
   await page.goto(process.env.APP_URL);
+  
   await page.getByRole('button', { name: 'Sign In' }).click();
   await page.getByRole('textbox', { name: 'Username' }).fill(process.env.USER_NAME);
   await page.getByRole('textbox', { name: 'Password' }).fill(process.env.USER_PASSWORD);
