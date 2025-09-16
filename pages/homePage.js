@@ -9,9 +9,15 @@ export class homePage {
     constructor(page) {
         this.page = page;
         this.heading = page.getByRole('link', { name: 'Manan' });
-        this.navLinks = page.locator('nav > div.gap-4 > a, nav > div.gap-4 > button');
+        this.homeLink = page.getByRole('link', { name: 'Home' });
+        this.tryNowLink = page.getByRole('link', { name: 'Try Now' });
+        this.pricingLink = page.getByText('Pricing', { exact: true });
+        this.signInButton = page.getByRole('button', { name: 'Sign In' });
         this.mainHeading = page.getByRole('heading', { name: 'Transform Your Medical' });
-        this.actionButtons = page.locator('button.inline-flex');
+        this.tryForFreeButton = page.getByRole('button', { name: 'Try for free' });
+        this.forMedicalProfessionalsButton = page.getByRole('button', { name: 'For Medical Professionals' });
+        this.startMedicalTriageButton = page.getByRole('button', { name: 'Start Medical Triage' });
+        this.viewPricingPlansButton = page.getByRole('button', { name: 'View Pricing Plans' });
         this.signInPopup = page.getByRole('dialog', { name: 'Welcome to MANAN' });
     }
 
@@ -23,30 +29,50 @@ export class homePage {
     async clickElement(elementName) {
         switch (elementName) {
             case 'Pricing':
-                await this.page.getByText('Pricing', { exact: true }).click();
+                await this.pricingLink.click();
                 break;
             case 'Home':
+                await this.homeLink.click();
+                break;
             case 'Try Now':
-                await this.page.getByRole('link', { name: elementName }).click();
+                await this.tryNowLink.click();
                 break;
             case 'Sign In':
+                await this.signInButton.click();
+                break;
             case 'Try for free':
+                await this.tryForFreeButton.click();
+                break;
             case 'For Medical Professionals':
+                await this.forMedicalProfessionalsButton.click();
+                break;
             case 'Start Medical Triage Assessment':
+                await this.startMedicalTriageButton.click();
+                break;
             case 'View Pricing Plans':
-                await this.page.getByRole('button', { name: elementName }).click();
+                await this.viewPricingPlansButton.click();
                 break;
         }
     }
 
     // --- Assertions --- 
     async expectNavLinks(expectedLinks) {
-        const actualLinks = await this.navLinks.allInnerTexts();
+        const homeText = await this.homeLink.innerText();
+        const tryNowText = await this.tryNowLink.innerText();
+        const pricingText = await this.pricingLink.innerText();
+        const signInText = await this.signInButton.innerText();
+
+        const actualLinks = [homeText, tryNowText, pricingText, signInText];
         expect(actualLinks).toEqual(expectedLinks);
     }
 
     async expectActionButtons(expectedActionButtons) {
-        const actualActionButtons = await this.actionButtons.allInnerTexts();
+        const tryForFreeText = await this.tryForFreeButton.innerText();
+        const forMedicalProfessionalsText = await this.forMedicalProfessionalsButton.innerText();
+        const startMedicalTriageText = await this.startMedicalTriageButton.innerText();
+        const viewPricingPlansText = await this.viewPricingPlansButton.innerText();
+
+        const actualActionButtons = [tryForFreeText, forMedicalProfessionalsText, startMedicalTriageText, viewPricingPlansText];
         expect(actualActionButtons).toEqual(expectedActionButtons);
     }
 
