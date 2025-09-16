@@ -8,24 +8,24 @@ export class triageAnalysisPage {
      */
     constructor(page) {
         this.page = page;
-        // Input Fields
+        // locators - Input Fields
         this.patientAgeField = page.getByRole('textbox', { name: 'Patient Age' });
         this.genderField = page.getByRole('combobox', { name: 'Gender at Birth' });
         this.chiefComplaintField = page.getByRole('textbox', { name: 'Chief Complaint' });
         this.detailedSymptomsField = page.getByRole('textbox', { name: 'Detailed Symptoms' });
         this.vitalSignsField = page.getByRole('textbox', { name: 'Vital Signs & Lab Values' });
 
-        // buttons
+        // locators - buttons
         this.uploadButton = page.getByRole('button', { name: 'Upload Blood Report (5' });
         this.analyseCaseButton = page.getByRole('button', { name: 'Analyze Case' });
 
-        // required field validators
+        // locators - required field validators
         this.patientAgeRequiredField = page.getByText('Patient age is required');
         this.chiefComplaintRequiredField = page.getByText('Chief complaint is required');
         this.symptomsRequiredField = page.getByText('Symptoms are required');
         this.vitalsRequiredField = page.getByText('Vital signs are required');
 
-        // notifications
+        // locators - notifications
         this.uploadSuccessNotification = this.page.getByRole('status').filter({ hasText: 'Blood report values have been' }).first();
         this.uploadErrorNotification = this.page.getByRole('status').filter({ hasText: 'Failed to parse blood report' }).first();
         this.analyseSuccessNotification = this.page.getByRole('status').filter({ hasText: 'Analysis Complete' }).first();
@@ -33,6 +33,7 @@ export class triageAnalysisPage {
         this.triageAssessmentField = page.getByText('TRIAGE ASSESSMENT Severity');
     }
 
+    // --- Actions ---
     async verifyLoaded() {
         await this.page.waitForURL(process.env.APP_URL + 'app');
 
@@ -58,7 +59,6 @@ export class triageAnalysisPage {
         await this.clickAnalyzeCase();
     }
 
-    // --- Actions ---
     async fillPatientDetails(formData) {
         await this.patientAgeField.fill(formData.Age);
         await this.genderField.click();
@@ -86,9 +86,10 @@ export class triageAnalysisPage {
 
     // --- Assertions ---
     async expectUploadSuccess() {
-        await this.uploadSuccessNotification.waitFor({ state: 'visible', timeout: 120_000 });
-        await expect(this.uploadSuccessNotification).toBeVisible();
-        await expect(this.vitalSignsField).toHaveValue(/.+/, { timeout: 90_000 });
+        await Promise.all([
+            expect(this.uploadSuccessNotification).toBeVisible({ timeout: 120_000 }),
+            expect(this.vitalSignsField).toHaveValue(/.+/, { timeout: 120_000 })
+        ]);
     }
 
     async expectUploadError() {
@@ -96,13 +97,10 @@ export class triageAnalysisPage {
     }
 
     async expectAnalysisComplete() {
-        // await expect(this.analyseSuccessNotification).toBeVisible({ timeout: 120_000 });
-        // await expect(this.triageAssessmentField).toBeVisible({ timeout: 90000 });
-        await this.analyseSuccessNotification.waitFor({ state: 'visible', timeout: 120_000 });
-        await expect(this.analyseSuccessNotification).toBeVisible();
-
-        await this.triageAssessmentField.waitFor({ state: 'visible', timeout: 90_000 });
-        await expect(this.triageAssessmentField).toBeVisible();
+        await Promise.all([
+            expect(this.analyseSuccessNotification).toBeVisible({ timeout: 120_000 }),
+            expect(this.triageAssessmentField).toBeVisible({ timeout: 120_000 })
+        ]);
     }
 
     async expectMissingFieldsError() {

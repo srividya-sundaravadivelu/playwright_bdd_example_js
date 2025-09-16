@@ -8,6 +8,7 @@ defineBddConfig({
 });
 
 export default defineConfig({
+  timeout: 120_000, // default for all tests
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 4 : 1,
