@@ -1,4 +1,5 @@
-import { triageAnalysisPage } from "./triageAnalysisPage";
+import { expect } from '@playwright/test';
+import { ensureLoggedIn } from '../utils/authHelper';
 
 // @ts-check
 export class homePage {
@@ -7,31 +8,16 @@ export class homePage {
      */
     constructor(page) {
         this.page = page;
-        this.heading = page.locator('nav h1');
+        this.heading = page.getByRole('link', { name: 'Manan' });
         this.navLinks = page.locator('nav > div.gap-4 > a, nav > div.gap-4 > button');
         this.mainHeading = page.getByRole('heading', { name: 'Transform Your Medical' });
         this.actionButtons = page.locator('button.inline-flex');
         this.signInPopup = page.getByRole('dialog', { name: 'Welcome to MANAN' });
     }
 
+    // --- Actions ---
     async goto() {
         await this.page.goto('/');
-    }
-
-    async getHeadingText() {
-        return (await this.heading.innerText()).trim();
-    }
-
-    async getNavLinksText() {
-        return await this.navLinks.allInnerTexts();
-    }
-
-    async getMainHeadingText() {
-        return (await this.mainHeading.innerText()).trim();
-    }
-
-    async getActionButtonsText() {
-        return await this.actionButtons.allInnerTexts();
     }
 
     async clickElement(elementName) {
@@ -53,17 +39,44 @@ export class homePage {
         }
     }
 
-    async getCurrentPageUrl() {
-        return this.page.url();
+    // --- Assertions --- 
+    async expectNavLinks(expectedLinks) {
+        const actualLinks = await this.navLinks.allInnerTexts();
+        expect(actualLinks).toEqual(expectedLinks);
     }
 
-    async isSignInPopupVisible() {
-        return await this.signInPopup.isVisible();
+    async expectActionButtons(expectedActionButtons) {
+        const actualActionButtons = await this.actionButtons.allInnerTexts();
+        expect(actualActionButtons).toEqual(expectedActionButtons);
     }
 
-    async getNormalizedUrl() {
-        const currentUrl = this.page.url();
-        return currentUrl.replace(/#$/, '');  // remove trailing #
-    }    
+    async expectSignInPopup() {
+        await expect(this.signInPopup).toBeVisible();
+    }
+
+    async expectHomePage() {
+        await expect(this.page).toHaveURL(new RegExp(`^${process.env.APP_URL}#?$`));
+    }
+
+    async expectSubscriptionPage() {
+        await expect(this.page).toHaveURL(process.env.APP_URL + 'subscription');
+    }
+
+    async expectTriageAnalysisPage() {
+        // Ensure user is logged in first
+        await ensureLoggedIn(this.page);
+        await expect(this.page).toHaveURL(
+            new RegExp(`^${process.env.APP_URL}app#?$`),
+            { timeout: 15000 }
+        );
+    }
+
+    async expectMainHeading(expectedMainHeading) {
+        await expect(this.mainHeading).toHaveText(expectedMainHeading);
+    }
+
+    async expectHeading(expectedHeading) {
+        await expect(this.heading).toHaveText(expectedHeading);
+    }
 }
 

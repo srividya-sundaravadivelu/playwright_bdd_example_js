@@ -1,5 +1,4 @@
 
-import { expect } from '@playwright/test';
 import { Given, When, Then } from '../fixtures/fixtures';
 
 Given('The user is on the Home page', async ({ homePage }) => {
@@ -7,40 +6,34 @@ Given('The user is on the Home page', async ({ homePage }) => {
 });
 
 Then('The user should see nav heading {string}', async ({ homePage }, heading) => {
-    const actualHeading = await homePage.getHeadingText();
-    expect(actualHeading).toBe(heading);
+    await homePage.expectHeading(heading);
 });
 
 Then('The user should see a navigation menu with links:', async ({ homePage }, dataTable) => {
     // Convert Cucumber DataTable to array
-    const expectedLinks = dataTable.raw().flat();  // ["Home", " Try now", "Pricing", "Sign in"]
-    const actualLinks = await homePage.getNavLinksText();
-    expect(actualLinks).toEqual(expectedLinks);
+    const expectedLinks = dataTable.raw().flat();  // ["Home", " Try now", "Pricing", "Sign in"]    
+    await homePage.expectNavLinks(expectedLinks);
 });
 
 Then('The user should see main heading {string}', async ({ homePage }, heading) => {
-    const actualHeading = await homePage.getMainHeadingText();
-    expect(actualHeading).toEqual(heading);
+    await homePage.expectMainHeading(heading);
 });
 
 Then('The user should see buttons:', async ({ homePage }, dataTable) => {
-    const expectedButtonsText = dataTable.raw().flat();  // [Try for free, For Medical Professionals, Start Medical Triage Assessment, View pricing plans]
-    const actualButtonsText = await homePage.getActionButtonsText();
-    expect(actualButtonsText).toEqual(expectedButtonsText);
+    const expectedButtons = dataTable.raw().flat();  // [Try for free, For Medical Professionals, Start Medical Triage Assessment, View pricing plans]
+    await homePage.expectActionButtons(expectedButtons);
 });
 
 Then('The user should be redirected to the Home page', async ({ homePage }) => {
-    const normalizedUrl = await homePage.getNormalizedUrl();
-    expect(normalizedUrl).toBe(process.env.APP_URL);
+    await homePage.expectHomePage();
 });
 
 Then('The user should see a pop-up window prompting sign-in with a Google account', async ({ homePage }) => {
-    const isVisible = await homePage.isSignInPopupVisible();
-    expect(isVisible).toBe(true);
+    await homePage.expectSignInPopup();
 });
 
 Then('The user should be redirected to the Subscription page', async ({ homePage }) => {
-    expect(homePage.page).toHaveURL(process.env.APP_URL + 'subscription');
+    await homePage.expectSubscriptionPage();
 });
 
 When('The user clicks {string}', async ({ homePage }, elementName) => {
@@ -48,8 +41,7 @@ When('The user clicks {string}', async ({ homePage }, elementName) => {
 });
 
 Then('The user should be redirected to the Manan application page', async ({ homePage }) => {
-    const normalizedUrl = await homePage.getNormalizedUrl();
-    expect(normalizedUrl).toBe(process.env.APP_URL + 'app');
+    await homePage.expectTriageAnalysisPage();
 });
 
 

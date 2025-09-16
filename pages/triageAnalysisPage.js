@@ -33,7 +33,6 @@ export class triageAnalysisPage {
         this.triageAssessmentField = page.getByText('TRIAGE ASSESSMENT Severity');
     }
 
-    // --- Actions ---
     async verifyLoaded() {
         await this.page.waitForURL(process.env.APP_URL + 'app');
 
@@ -41,6 +40,7 @@ export class triageAnalysisPage {
         await expect(this.page).toHaveURL(process.env.APP_URL + 'app');
     }
 
+    // --- Actions ---
     async fillForm(scenarioName) {
         const formData = PatientData.Patients.find(d => d.Scenario === scenarioName);
         if (!formData) {
