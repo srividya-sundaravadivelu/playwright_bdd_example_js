@@ -21,3 +21,7 @@ Feature: Patient Triage Analysis Form
       | Complete Form          |
       | Complete Form - Manual |
       | Missing Fields         |
+
+  Scenario: Verify Dashboard button
+    When The user clicks Dashboard
+    Then The user should be redirected to the Dashboard page

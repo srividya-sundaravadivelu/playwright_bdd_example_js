@@ -36,4 +36,13 @@ Then('the user should see the {string} notification', async ({ triageAnalysisPag
     }
 });
 
+When('The user clicks Dashboard', async ({ triageAnalysisPage }) => {
+    await triageAnalysisPage.clickDashboard();
+});
+
+Then('The user should be redirected to the Dashboard page', async ({ }) => {
+    // Step: Then The user should be redirected to the Dashboard page
+    // From: features\triage-analysis.feature:27:5
+});
+
 

@@ -1,13 +1,14 @@
 // @ts-check
 import { expect } from '@playwright/test';
-import PatientData from '../TestData/PatientData.json';
+// import PatientData from '../TestData/PatientData.json';
 export class triageAnalysisPage {
 
     /**
      * @param {import("playwright-core").Page} page
      */
-    constructor(page) {
+    constructor(page, patientData) {
         this.page = page;
+        this.patientData = patientData;
         // locators - Input Fields
         this.patientAgeField = page.getByRole('textbox', { name: 'Patient Age' });
         this.genderField = page.getByRole('combobox', { name: 'Gender at Birth' });
@@ -18,6 +19,7 @@ export class triageAnalysisPage {
         // locators - buttons
         this.uploadButton = page.getByRole('button', { name: 'Upload Blood Report (5' });
         this.analyseCaseButton = page.getByRole('button', { name: 'Analyze Case' });
+        this.dashboardButton = page.getByRole('button', { name: 'Dashboard' });
 
         // locators - required field validators
         this.patientAgeRequiredField = page.getByText('Patient age is required');
@@ -42,7 +44,7 @@ export class triageAnalysisPage {
 
     // --- Actions ---
     async fillForm(scenarioName) {
-        const formData = PatientData.Patients.find(d => d.Scenario === scenarioName);
+        const formData = this.patientData.Patients.find(d => d.Scenario === scenarioName);
         if (!formData) {
             throw new Error(`No data found for scenario: ${scenarioName}`);
         }
@@ -84,6 +86,10 @@ export class triageAnalysisPage {
         await this.analyseCaseButton.click();
     }
 
+    async clickDashboard() {
+        await this.dashboardButton.click();
+    }
+
     // --- Assertions ---
     async expectUploadSuccess() {
         await Promise.all([
@@ -109,6 +115,10 @@ export class triageAnalysisPage {
         await expect(this.chiefComplaintRequiredField).toBeVisible();
         await expect(this.symptomsRequiredField).toBeVisible();
         await expect(this.vitalsRequiredField).toBeVisible();
+    }
+
+    async expectDashboardPage() {
+        await expect(this.page).toHaveURL(process.env.APP_URL + 'dashboard');
     }
 
 }
